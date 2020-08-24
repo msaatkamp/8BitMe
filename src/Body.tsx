@@ -5,8 +5,7 @@ import Background, { getBackground } from './components/background'
 const App = () => {
   const currentHour: number = Math.floor(new Date().getHours() / 2)
   return (
-      <Background currentHour={currentHour}>  
-      </Background>
+      <Background currentHour={currentHour} />
   )
 }
 

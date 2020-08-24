@@ -6,7 +6,7 @@ module.exports = {
     },
     extends: [
       'react-app',
-      "@intelie/eslint-config",
+      'eslint-config-airbnb',
       'plugin:@typescript-eslint/recommended',
       'prettier/@typescript-eslint',
     ],
@@ -26,7 +26,7 @@ module.exports = {
       'react/jsx-filename-extension': [
         'error',
         {
-          extensions: ['.tsx'],
+          extensions: ['.tsx', '.ts'],
         },
       ],
       'import/prefer-default-export': 'off',
