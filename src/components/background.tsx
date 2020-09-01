@@ -1,20 +1,11 @@
-import React, {
-  useState, useEffect, FunctionComponent, ReactNode,
-} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 type BackgroundProps = {
-    currentHour: number,
-    children?: ReactNode
+    currentHour: number
 }
-const Background: React.FC<BackgroundProps> = ({ currentHour }) => {
-  console.log(`url: ` , getBackground(currentHour) , {hour: currentHour})
+const Background = ({ currentHour }: BackgroundProps) => {
   const imgUrl = getBackground(currentHour)
-  const BitImage = styled.img`
-    height: 100%;
-    width: 80vw;
-    padding: 0 10%;
-  `
 
   const BitBackground = styled.div`
     background: url(${imgUrl}) no-repeat center;
@@ -24,25 +15,15 @@ const Background: React.FC<BackgroundProps> = ({ currentHour }) => {
     width: 100%;
   `
 
-  /* useEffect(() => {
-    if(dayTime == currentHour || dayTime === currentHour + 1)
-      setDayTime(currentHour)
-      backgroundUrl = getBackground(dayTime)
-  }, [dayTime, backgroundUrl])
-    }
-  */
-
   return (
-    <BitBackground>
-      {/* <BitImage src={imgUrl} /> */}
-    </BitBackground>
+    <BitBackground/>
   )
 }
 
 
 export default Background;
 
-export const getBackground: Function = (hour: number) => {
+export const getBackground: Function = (hour: number): string => {
   let backgroundUrl: string = "";
 
   switch (hour) {
