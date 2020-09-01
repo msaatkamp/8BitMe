@@ -9,7 +9,9 @@ const Background = ({ currentHour }: BackgroundProps) => {
 
   const BitBackground = styled.div`
     background: url(${imgUrl});
-    background-size: 100% 100%;
+    background-size: 100% 85%;
+    background-color: #548934;
+    background-repeat: no-repeat;
     height: 100vh;
     width: 100%;
   `
