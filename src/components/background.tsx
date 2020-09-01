@@ -8,9 +8,8 @@ const Background = ({ currentHour }: BackgroundProps) => {
   const imgUrl = getBackground(currentHour)
 
   const BitBackground = styled.div`
-    background: url(${imgUrl}) no-repeat center;
+    background: url(${imgUrl});
     background-size: 100% 100%;
-    background-attachment: fixed;
     height: 100vh;
     width: 100%;
   `
