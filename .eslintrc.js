@@ -6,7 +6,7 @@ module.exports = {
     },
     extends: [
       'react-app',
-      'eslint-config-airbnb',
+      '@intelie/eslint-config',
       'plugin:@typescript-eslint/recommended',
       'prettier/@typescript-eslint',
     ],
