@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 type BackgroundProps = {
-    currentHour: number
+  currentHour: number
 }
-const Background = ({ currentHour }: BackgroundProps) => {
+const Background: React.FC<BackgroundProps> = ({ currentHour, children }) => {
   const imgUrl = getBackground(currentHour)
 
   const BitBackground = styled.div`
@@ -12,10 +12,15 @@ const Background = ({ currentHour }: BackgroundProps) => {
     background-size: 100% 100%;
     height: 100vh;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   `
 
   return (
-    <BitBackground/>
+    <BitBackground >
+      {children}
+    </BitBackground>
   )
 }
 
@@ -65,6 +70,6 @@ export const getBackground: Function = (hour: number): string => {
       backgroundUrl = '/img/10-Early-Night.png';
       break;
   }
-  
+
   return backgroundUrl
 };
