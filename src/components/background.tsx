@@ -16,7 +16,7 @@ const Background: React.FC<BackgroundProps> = ({ currentHour, children }) => {
     flex-direction: column;
     justify-content: center;
   `
-
+  console.log(`Current Hour: ` , currentHour)
   return (
     <BitBackground >
       {children}
