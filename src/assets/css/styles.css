@@ -1,0 +1,8 @@
+body {
+    font-family: 'Press Start 2P', cursive;
+}
+
+@font-face {
+    font-family: 'Press Start 2P', cursive;
+    src: local('Press Start 2P'), url(../fonts/PressStart2P-Regular.ttf) format('ttf');
+}
