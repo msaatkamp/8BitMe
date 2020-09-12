@@ -18,12 +18,12 @@ type gameProps = {
 }
 
 
-let gameMap = [
-    [12, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [12, 1, 2, 10, 11, 12, 13, 14, 15, 16],
-    [12, 1, 2, 17, 18, 19, 20, 21, 22, 23],
-    [12, 1, 2, 0, 0, 0, 0, 0, 0, 5],
-    [12, 1, 2, 1, 0, 0, 0, 0, 0, 5]
+let layer1 = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ]
 
 const tileSize: number = 32;
@@ -39,30 +39,31 @@ const Game: React.FC<gameProps> = ({ save }) => {
     const [loading, setLoading] = useState<boolean>(true)
 
     useEffect(() => {
-        console.log('on mount hook')
         if (canvasRef.current) {
             const canvas = canvasRef.current;
             const context = canvas.getContext('2d')
             const tileSet: HTMLImageElement = new Image()
             const tileSetRowSize = 8;
             const tileSetColSize = 8;
-            tileSet.src = "../assets/imgs/room.gif"
-            console.log(`image urL `, "localhost:3000/assets/imgs/room.gif")
+            tileSet.src = "../assets/imgs/room.png"
             tileSet.onload = () => {
 
-                console.log(`carrego essa porra`)
-                gameMap.map((row, y) => {
+                layer1.map((row, y) => {
                     row.forEach((id, x) => {
-                        console.log(`x, y `, { x, y, tileSize, id, row })
                         if (context) {
-
+                            // Total Size: x: 8 y: 133
                             const xPos = x * tileSize;
                             const yPos = y * tileSize;
                             const tile = id
                             const tileRow = (tile / tileSetRowSize) | 0
                             const tileCol = (tile % tileSetColSize) | 0
-                            console.log(`Cant read property: `, { tileRow, tileCol })
+                            const tileRow2 = (1027 / tileSetRowSize) | 0
+                            const tileCol2 = (1027 % tileSetColSize) | 0
                             context.drawImage(tileSet, (tileCol * tileSize), (tileRow * tileSize), tileSize, tileSize, (xPos), (yPos), tileSize, tileSize);
+
+                            if(x == 5 && y == 2) {
+                                context.drawImage(tileSet, (tileCol2 * tileSize), (tileRow2 * tileSize), tileSize, tileSize, (xPos), (yPos), tileSize, tileSize);
+                            }
                             /*
                             context.save()
                             context.beginPath()
@@ -83,7 +84,6 @@ const Game: React.FC<gameProps> = ({ save }) => {
 
     const gameContext = useContext(GameState)
 
-    console.log(`game context: `, gameContext)
     return (
         <Container>
             <canvas
@@ -92,7 +92,6 @@ const Game: React.FC<gameProps> = ({ save }) => {
                 onClick={(x) => {
                     const me = { ...x }
                     const canvas = canvasRef.current
-                    console.log(`CLicked at `, { me }, ` with keys ${Object.keys(me)} ref: ${canvas}`)
                 }}
                 width={640}
                 height={320}
