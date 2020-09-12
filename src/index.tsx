@@ -1,10 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Body from './Body';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Main from './Main'
+import "./assets/css/styles.css"
 
 ReactDOM.render(
   <React.StrictMode>
-    <Body />
+    <Main />
   </React.StrictMode>,
   document.getElementById('root')
 );

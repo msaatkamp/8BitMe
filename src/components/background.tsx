@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 type BackgroundProps = {
-    currentHour: number
+  currentHour: number
 }
-const Background = ({ currentHour }: BackgroundProps) => {
+const Background: React.FC<BackgroundProps> = ({ currentHour, children }) => {
   const imgUrl = getBackground(currentHour)
 
   const BitBackground = styled.div`
@@ -14,10 +14,15 @@ const Background = ({ currentHour }: BackgroundProps) => {
     background-repeat: no-repeat;
     height: 100vh;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   `
-
+  console.log(`Current Hour: ` , currentHour)
   return (
-    <BitBackground/>
+    <BitBackground >
+      {children}
+    </BitBackground>
   )
 }
 
@@ -29,44 +34,44 @@ export const getBackground: Function = (hour: number): string => {
 
   switch (hour) {
     case 0:
-      backgroundUrl = '/img/12-Late-Night.png';
+      backgroundUrl = 'assets/imgs/12-Late-Night.png';
     case 1:
-      backgroundUrl = '/img/01-Early-Morning.png';
+      backgroundUrl = 'assets/imgs/01-Early-Morning.png';
       break;
     case 2:
-      backgroundUrl = '/img/02-Mid-Morning.png';
+      backgroundUrl = 'assets/imgs/02-Mid-Morning.png';
       break;
     case 3:
-      backgroundUrl = '/img/03-Late-Morning.png';
+      backgroundUrl = 'assets/imgs/03-Late-Morning.png';
       break;
     case 4:
-      backgroundUrl = '/img/04-Early-Afternoon.png';
+      backgroundUrl = 'assets/imgs/04-Early-Afternoon.png';
       break;
     case 5:
-      backgroundUrl = '/img/05-Mid-Afternoon.png';
+      backgroundUrl = 'assets/imgs/05-Mid-Afternoon.png';
       break;
     case 6:
-      backgroundUrl = '/img/06-Late-Afternoon.png';
+      backgroundUrl = 'assets/imgs/06-Late-Afternoon.png';
       break;
     case 7:
-      backgroundUrl = '/img/07-Early-Evening.png';
+      backgroundUrl = 'assets/imgs/07-Early-Evening.png';
       break;
     case 8:
-      backgroundUrl = '/img/08-Mid-Evening.png';
+      backgroundUrl = 'assets/imgs/08-Mid-Evening.png';
       break;
     case 9:
-      backgroundUrl = '/img/09-Late-Evening.png';
+      backgroundUrl = 'assets/imgs/09-Late-Evening.png';
       break;
     case 10:
-      backgroundUrl = '/img/10-Early-Night.png';
+      backgroundUrl = 'assets/imgs/10-Early-Night.png';
       break;
     case 11:
-      backgroundUrl = '/img/11-Mid-Night.png';
+      backgroundUrl = 'assets/imgs/11-Mid-Night.png';
       break;
     default:
-      backgroundUrl = '/img/10-Early-Night.png';
+      backgroundUrl = 'assets/imgs/10-Early-Night.png';
       break;
   }
-  
+
   return backgroundUrl
 };
