@@ -1,22 +1,7 @@
-import React, { useRef, useEffect, useContext, useState, ContextType, SyntheticEvent } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { GameState } from '../Main'
-
-export type savedGame = {
-    points?: number,
-    name?: string,
-    company?: string
-}
-export type gameStatus = {
-    started: boolean,
-    paused: boolean,
-    music: boolean
-}
-
-type gameProps = {
-    save?: object
-}
-
+import { GameContext } from './types'
+import { connect } from 'react-redux';
 
 let layer1 = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -29,14 +14,17 @@ let layer1 = [
 const tileSize: number = 32;
 
 const getTile = () => {
-
-
 }
 
 
-const Game: React.FC<gameProps> = ({ save }) => {
+const Game = ({ savedGame, currentGame }: GameContext): JSX.Element => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const [loading, setLoading] = useState<boolean>(true)
+    const { started, music, paused } = currentGame
+
+    if(savedGame) {
+        console.log({savedGame, started, music, paused})
+    }
 
     useEffect(() => {
         if (canvasRef.current) {
@@ -49,6 +37,7 @@ const Game: React.FC<gameProps> = ({ save }) => {
             const tileSetRowSize = 8;
             const tileSetColSize = 8;
             tileSet.src = "../assets/imgs/room.png"
+            
             tileSet.onload = () => {
 
                 while(iX<8) {
@@ -62,7 +51,6 @@ const Game: React.FC<gameProps> = ({ save }) => {
                             const tileRow = (tile / tileSetRowSize) | 0
                             const tileCol = (tile % tileSetColSize) | 0
                             context.drawImage(tileSet, (tileCol * tileSize), (tileRow * tileSize), tileSize, tileSize, (xPos), (yPos), tileSize, tileSize);
-
                             context.fillStyle = 'white'
                             context.fillText((tile).toString(), xPos + 12, yPos + 16, tileSize)
                             iY++
@@ -105,11 +93,11 @@ const Game: React.FC<gameProps> = ({ save }) => {
                 // })
                 setLoading(false)
             }
+
+            // canvas.addEventListener("keyPress", keyPressMap)
+
         }
     }, [])
-
-    const gameContext = useContext(GameState)
-    const { started, music, paused } = gameContext?.gameStatus
 
     const keyPressMap = (e: React.KeyboardEvent) => {
         const key = e.key
@@ -128,7 +116,6 @@ const Game: React.FC<gameProps> = ({ save }) => {
                     const me = { ...x }
                     const canvas = canvasRef.current
                 }}
-                onKeyPress={keyPressMap}
                 width={640}
                 height={320}
             ></canvas >
@@ -150,4 +137,4 @@ const Container: React.FC = styled.div`
     }
 `
 
-export default Game;
+export default connect((state: GameContext) => ({ currentGame: state.currentGame, save: state.savedGame}))(Game)

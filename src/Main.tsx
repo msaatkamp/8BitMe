@@ -1,20 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react'
 import Background from './components/background'
-import Game, { savedGame, gameStatus } from './components/game'
+import Game from './components/game'
 
-const gameStats: gameStatus = { started: false, paused: false, music: false }
+import { Provider } from 'react-redux'
 
-export interface GameContextType {
-    gameStatus: gameStatus,
-    savedGame?: savedGame,
-    setSavedGame?: (savedGame: savedGame) => void
-  }
-export const GameState = React.createContext<GameContextType>({ gameStatus: gameStats })
+import Items from './components/Items/Items'
+import store from './components/redux/store'
 
 const Main = () => {
   const currentHour: number = Math.floor(new Date().getHours() / 2)
-  const [savedGame, setSavedGame] = useState<savedGame>({})
-
 
   /* TODO
   useEffect(() => {
@@ -23,13 +17,16 @@ const Main = () => {
       setSavedGame(localStorageSave)
     }
   }, [])*/
-
+  console.log({ state: store.getState()})
   return (
-    <GameState.Provider value={{ gameStatus: gameStats, savedGame, setSavedGame }}>
+    // <GameState.Provider value={{ gameStatus: gameStats, savedGame, setSavedGame, item }}>
+      <Provider store={store}>
       <Background currentHour={currentHour} >
-        <Game save={savedGame} />
+        <Game />
+        <Items/>
       </Background>
-    </GameState.Provider>
+      </Provider>
+    // </GameState.Provider>
   )
 }
 
