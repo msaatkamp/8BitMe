@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useContext } from 'react'
+import React, { useRef, useEffect, useContext, useState } from 'react'
 import styled from 'styled-components'
 import { GameState } from '../Main'
 
@@ -17,36 +17,85 @@ type gameProps = {
     save?: object
 }
 
+
+let layer1 = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+]
+
+const tileSize: number = 32;
+
+const getTile = () => {
+
+
+}
+
+
 const Game: React.FC<gameProps> = ({ save }) => {
-    let context = null;
-    let gameMap = [
-        0, 0, 1, 0, 0,
-        0, 1, 1, 0, 0,
-        0, 1, 0, 0, 0,
-        0, 1, 0, 0, 0,
-        0, 1, 1, 1, 2
-    ]
-
-    const canvasRef = useRef(null)
-
+    const canvasRef = useRef<HTMLCanvasElement>(null)
+    const [loading, setLoading] = useState<boolean>(true)
 
     useEffect(() => {
-        console.log('on mount hook')
+        if (canvasRef.current) {
+            const canvas = canvasRef.current;
+            const context = canvas.getContext('2d')
+            const tileSet: HTMLImageElement = new Image()
+            const tileSetRowSize = 8;
+            const tileSetColSize = 8;
+            tileSet.src = "../assets/imgs/room.png"
+            tileSet.onload = () => {
+
+                layer1.map((row, y) => {
+                    row.forEach((id, x) => {
+                        if (context) {
+                            // Total Size: x: 8 y: 133
+                            const xPos = x * tileSize;
+                            const yPos = y * tileSize;
+                            const tile = id
+                            const tileRow = (tile / tileSetRowSize) | 0
+                            const tileCol = (tile % tileSetColSize) | 0
+                            const tileRow2 = (1027 / tileSetRowSize) | 0
+                            const tileCol2 = (1027 % tileSetColSize) | 0
+                            context.drawImage(tileSet, (tileCol * tileSize), (tileRow * tileSize), tileSize, tileSize, (xPos), (yPos), tileSize, tileSize);
+
+                            if(x == 5 && y == 2) {
+                                context.drawImage(tileSet, (tileCol2 * tileSize), (tileRow2 * tileSize), tileSize, tileSize, (xPos), (yPos), tileSize, tileSize);
+                            }
+                            /*
+                            context.save()
+                            context.beginPath()
+                            context.strokeRect(xPos, yPos, 32, 32)
+                            context.fillStyle = context && !id ? "orange" : id === 1 ? "yellow" : id === 5 ? "pink" : "red"
+                            context.fillRect(xPos, yPos, tileSize, tileSize)
+                            context.stroke()
+                            context.restore()
+                            context.closePath()*/
+                        }
+
+                    })
+                })
+                setLoading(false)
+            }
+        }
     }, [])
 
     const gameContext = useContext(GameState)
 
-    console.log(`game context: `, gameContext)
     return (
         <Container>
             <canvas
                 ref={canvasRef}
-                hidden={true}
+                hidden={loading}
                 onClick={(x) => {
-                    const me = x
+                    const me = { ...x }
                     const canvas = canvasRef.current
-                    console.log(`CLicked at `, me, ` with keys ${Object.keys(me)} ref: ${canvas}`)
-                }}></canvas >
+                }}
+                width={640}
+                height={320}
+            ></canvas >
         </Container>
     )
 }
@@ -56,11 +105,14 @@ const Container: React.FC = styled.div`
     height: 50vh;
     display: flex;
     align-self: center;
+    justify-content: center;
     > canvas {
-        width: 100%;
-        height: auto;
-        border: solid 1px white;
-        opacity: 50%;
+        display: flex;
+        width: 50vw;
+        height: 50vh;
+        /* border: solid 1px white; */
+        opacity: 100%;
+        padding: 12px;
     }
 `
 
