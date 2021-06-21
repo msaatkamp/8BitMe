@@ -21,10 +21,10 @@ const Main = () => {
   return (
     // <GameState.Provider value={{ gameStatus: gameStats, savedGame, setSavedGame, item }}>
       <Provider store={store}>
-      <Background currentHour={currentHour} >
-        <Game />
-        <Items/>
-      </Background>
+        <Background currentHour={currentHour} >
+          <Game />
+          <Items/>
+        </Background>
       </Provider>
     // </GameState.Provider>
   )

@@ -1,7 +1,7 @@
 import { createStore, combineReducers } from 'redux'
-import { gameStatus, savedGame, } from '../types'
+import { gameStatus, savedGame, GameContext, } from '../types'
 
-const itemList = () => [
+const itemList = [
     {
         id: 1,
         name: "Adaga",
@@ -16,14 +16,26 @@ const itemList = () => [
     }
 ]
 
-const currentGame: gameStatus = { started: false, paused: false, music: false }
+const currentGame: gameStatus = { started: false, paused: false, music: false, itemList: itemList }
 
-let reducers = {
-    initialState: () => {
-        return { itemList, currentGame, savedGame: {}}
+const initialState = {currentGame, savedGame: {}}
+
+const reducer = (state = initialState, action?: any) => {
+    console.log({ action })
+    switch (action.type) {
+        case 'REMOVE_ITEM':
+            // Remove an item from the items Array
+            const beforeState = state
+            let itemList = state.currentGame.itemList 
+            itemList = itemList?.filter(e => e.id !== action.itemId)
+
+            beforeState.currentGame.itemList = itemList
+            return { ...beforeState }
+        default:
+        return state;
     }
 }
 
-const store = createStore(reducers.initialState)
+const store = createStore(reducer)
 
 export default store

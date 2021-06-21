@@ -1,5 +1,5 @@
 export type GameContext = {
-    currentGame: (gameStatus & savedGame),
+    currentGame: (gameStatus ),
     savedGame?: savedGame,
     setSavedGame?: (savedGame: savedGame) => void
 }
@@ -7,8 +7,8 @@ export type GameContext = {
 export type itemObj = {
     id: number,
     name: string,
-    quantity: number,
-    locked: boolean
+    quantity?: number,
+    locked?: boolean
 }
 
 export type savedGame = {
@@ -21,7 +21,7 @@ export type gameStatus = {
     started: boolean,
     paused: boolean,
     music: boolean
-}
+} & savedGame
 
 type gameProps = {
     save?: object
